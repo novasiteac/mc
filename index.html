@@ -1,47 +1,100 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovaSite - 無料でWebサイト作成</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<header>
-  <h1>NovaSite</h1>
-  <nav>
-    <a href="index.html">ホーム</a>
-    <a href="create.html">ウェブサイト作成</a>
-    <a href="privacy.html">プライバシーポリシー</a>
-    <a href="terms.html">利用規約</a>
-    <a href="contact.html">お問い合わせ</a>
-  </nav>
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>NovaSite | 無料で始めるウェブサイト制作</title>
+<link rel="stylesheet" href="styles.css">
+<meta name="description" content="無料でサイトを作成。気に入ったら月額プランに移行できます。">
+</head><body>
+<nav class="nav">
+  <div class="inner">
+    <a class="logo" href="index.html"><img src="assets/logo.svg" alt="NovaSiteロゴ"><span>NovaSite</span></a>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="create.html">ウェブサイト作成フォーム</a>
+      <a href="contact.html">お問い合わせ</a>
+      <a href="privacy.html">プライバシーポリシー</a>
+      <a href="terms.html">利用規約</a>
+    </div>
+  </div>
+</nav>
+
+<header class="hero container">
+  <div class="reveal">
+    <div class="kicker">無料で今すぐスタート</div>
+    <h1><span data-typewriter="あなたのビジネスに“ちょうど良い”サイトを。NovaSiteは無料で制作、気に入ったら月額契約。"></span></h1>
+    <p>まずは無料でウェブサイトを作成。公開前にご確認いただき、気に入っていただけたら<span class="badge">月額2,500円〜</span>でご契約いただけます。</p>
+    <div class="cta">
+      <a class="btn primary" href="create.html">無料で作ってみる</a>
+      <a class="btn" href="#pricing">料金を見る</a>
+    </div>
+  </div>
+  <div class="reveal sparkle card">
+    <h3>NovaSite とは？</h3>
+    <p>小規模店舗・個人事業向けのシンプルなサイト制作サービスです。面倒な準備は不要。フォームに入力するだけで、伝わるサイトをご用意します。</p>
+    <ul class="small">
+      <li>✓ ドメイン・サーバーの相談もOK</li>
+      <li>✓ アニメーション演出で印象UP</li>
+      <li>✓ 公開後の更新もお任せ</li>
+    </ul>
+  </div>
 </header>
-<main>
-  <section class="hero">
-    <h2>無料でホームページを作成</h2>
-    <p>気に入ったら契約プランで本格運用！</p>
-  </section>
-  <section class="plans">
-    <h2>料金プラン</h2>
-    <div class="plan">
+
+<section class="container reveal">
+  <h2 class="section-title">料金プラン</h2>
+  <p class="small">※すべて税込表示・月額 / 無料制作は初回のみ</p>
+  <div class="grid cols-3 pricing">
+    <div class="card price-card">
+      <div class="badge">月額 2,500円</div>
       <h3>ライト</h3>
-      <p class="small">※年間契約のみ</p>
-      <p>月額 3,000円</p>
-      <p>提供されたウェブサイトが利用可能</p>
+      <p class="price">¥2,500</p>
+      <ul>
+        <li>提供されたウェブサイトをそのままご利用可能</li>
+      </ul>
+      <a class="btn add-btn" href="create.html">このプランで依頼</a>
     </div>
-    <div class="plan">
+    <div class="card price-card sparkle">
+      <div class="badge">月額 3,500円</div>
       <h3>スタンダード</h3>
-      <p>月額 4,000円</p>
-      <p>カスタム編集・お知らせ・アップデート or アニメーション追加</p>
+      <p class="price">¥3,500</p>
+      <ul>
+        <li>ウェブサイトのカスタム編集が可能</li>
+        <li>お知らせ投稿やサイトのアップデート対応</li>
+        <li>または アニメーション効果の追加</li>
+      </ul>
+      <a class="btn add-btn" href="create.html">このプランで依頼</a>
     </div>
-    <div class="plan">
+    <div class="card price-card">
+      <div class="badge">月額 4,500円</div>
       <h3>プレミアム</h3>
-      <p>月額 5,000円</p>
-      <p>カスタム編集・お知らせ・アップデート + アニメーション追加</p>
+      <p class="price">¥4,500</p>
+      <ul>
+        <li>ウェブサイトのカスタム編集が可能</li>
+        <li>お知らせ投稿やサイトのアップデート対応</li>
+        <li>さらに アニメーション効果の追加</li>
+      </ul>
+      <a class="btn add-btn" href="create.html">このプランで依頼</a>
     </div>
-  </section>
-</main>
+  </div>
+</section>
+
+<section class="container grid cols-3 reveal">
+  <div class="card">
+    <h3>無料で作成</h3>
+    <p>公開前にしっかりご確認いただけます。気に入っていただけたらご契約ください。</p>
+  </div>
+  <div class="card">
+    <h3>高速対応</h3>
+    <p>フォーム入力から最短で初稿をご案内。修正もスムーズです。</p>
+  </div>
+  <div class="card">
+    <h3>安心サポート</h3>
+    <p>公開後の保守や更新もお任せ。SNS連携や地図埋め込みにも対応。</p>
+  </div>
+</section>
+
+<footer class="footer">
+  © <span id="y"></span> NovaSite — <a href="terms.html">利用規約</a> ・ <a href="privacy.html">プライバシー</a>
+</footer>
+
 <script src="script.js"></script>
-</body>
-</html>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body></html>

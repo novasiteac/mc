@@ -1,28 +1,50 @@
-document.addEventListener("DOMContentLoaded", () => {
-  const FORMSPREE_CONTACT_ENDPOINT = "https://formspree.io/f/xovlgzzy";
+// NovaSite JS (JavaScript animations & helpers)
+const FORMSPREE_CONTACT_ENDPOINT = ""; // ← ここに Formspree のフォームURLを入れると /contact.html が送信可能になります
 
-  function setupRepeatable(sectionId, templateId, addBtnId) {
-    const section = document.getElementById(sectionId);
-    const template = document.getElementById(templateId);
-    const addBtn = document.getElementById(addBtnId);
-    if (!section || !template || !addBtn) return;
-    addBtn.addEventListener("click", () => {
-      const clone = template.content.cloneNode(true);
-      section.appendChild(clone);
-    });
-  }
+// Simple scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries)=>{
+  entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target);} });
+},{threshold:.1});
+revealEls.forEach(el=>io.observe(el));
 
-  setupRepeatable("bg-photos", "bg-photo-template", "add-bg-btn");
-  setupRepeatable("menu-items", "menu-item-template", "add-menu-btn");
+// Typewriter for hero
+function typewriter(el, text, speed=55){
+  let i=0; el.textContent="";
+  const tick=()=>{
+    if(i<=text.length){ el.textContent = text.slice(0,i); i++; requestAnimationFrame(()=>setTimeout(tick, speed)); }
+  }; tick();
+}
+document.querySelectorAll('[data-typewriter]').forEach(el=>typewriter(el, el.dataset.typewriter));
 
-  const contactForm = document.querySelector("form[action='/contact']");
-  if (contactForm) {
-    contactForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const data = new FormData(contactForm);
-      fetch(FORMSPREE_CONTACT_ENDPOINT, { method: "POST", body: data })
-        .then(() => alert("送信しました！"))
-        .catch(() => alert("エラーが発生しました"));
-    });
-  }
-});
+// Repeatable groups (for create.html)
+function setupRepeatable(containerId, templateId, addBtnId){
+  const container = document.getElementById(containerId);
+  const template = document.getElementById(templateId);
+  const addBtn = document.getElementById(addBtnId);
+  if(!container || !template || !addBtn) return;
+  const addItem = ()=>{
+    const node = template.content.cloneNode(true);
+    container.appendChild(node);
+  };
+  addBtn.addEventListener('click', addItem);
+  // Start with one item
+  if(container.children.length===0) addItem();
+}
+setupRepeatable('top-photos', 'tpl-photo', 'btn-add-top-photo');
+setupRepeatable('main-visuals', 'tpl-main-visual', 'btn-add-main-visual');
+setupRepeatable('menu-items', 'tpl-menu-item', 'btn-add-menu-item');
+
+// Contact form (contact.html)
+const contactForm = document.getElementById('contact-form');
+if(contactForm){
+  contactForm.addEventListener('submit', async (e)=>{
+    e.preventDefault();
+    const endpoint = FORMSPREE_CONTACT_ENDPOINT.trim();
+    if(!endpoint){ alert('Formspree のURLを script.js の FORMSPREE_CONTACT_ENDPOINT に設定してください。'); return; }
+    const data = new FormData(contactForm);
+    const res = await fetch(endpoint, { method:'POST', body:data, headers:{ 'Accept':'application/json' } });
+    if(res.ok){ alert('送信しました。ありがとうございます！'); contactForm.reset(); }
+    else { alert('送信に失敗しました。URLをご確認ください。'); }
+  });
+}

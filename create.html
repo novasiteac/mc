@@ -1,72 +1,138 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>NovaSite - ウェブサイト作成フォーム</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-<header>
-  <h1>ウェブサイト作成フォーム</h1>
-</header>
-<main>
-  <form action="https://formspree.io/f/xovlgzzy" method="POST">
-    <label>名前<input type="text" name="name"></label>
-    <label>メールアドレス<input type="email" name="email"></label>
+<!doctype html><html lang="ja"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ウェブサイト作成フォーム | NovaSite</title>
+<link rel="stylesheet" href="styles.css">
+<meta name="description" content="無料ウェブサイト作成フォーム。不要な項目は「なし」とご記入ください。">
+</head><body>
+<nav class="nav">
+  <div class="inner">
+    <a class="logo" href="index.html"><img src="assets/logo.svg" alt="NovaSiteロゴ"><span>NovaSite</span></a>
+    <div class="links">
+      <a href="index.html">ホーム</a>
+      <a href="create.html">ウェブサイト作成フォーム</a>
+      <a href="contact.html">お問い合わせ</a>
+    </div>
+  </div>
+</nav>
 
-    <label>ご希望プラン
-      <select name="plan">
-        <option>ライト（3,000円/月・年間契約）</option>
-        <option>スタンダード（4,000円/月）</option>
-        <option>プレミアム（5,000円/月）</option>
-        <option>未定</option>
+<main class="container">
+  <h1 class="reveal">ウェブサイト作成フォーム</h1>
+  <p class="small reveal">＊いらないものには「なし」と入力してください。写真は必要に応じて複数追加できます。</p>
+
+  <form class="reveal" action="#" method="post" enctype="multipart/form-data">
+    <fieldset>
+      <legend>基本情報</legend>
+      <label>名前 <input class="input" type="text" name="client_name" required placeholder="山田 太郎"></label>
+      <label>メールアドレス <input class="input" type="email" name="client_email" required placeholder="you@example.com"></label>
+    </fieldset>
+
+    <fieldset>
+      <legend>1. トップページ（ホーム）</legend>
+
+      <label>●ロゴ（JPG添付） <span class="help">JPG/PNG 可</span></label>
+      <div class="repeatable" id="top-photos"></div>
+      <button type="button" class="btn add-btn" id="btn-add-top-photo">写真を追加</button>
+      <template id="tpl-photo">
+        <div class="item"><input class="input" type="file" name="logo_photos[]" accept="image/*"></div>
+      </template>
+
+      <label>●店舗名 <input class="input" type="text" name="shop_name" placeholder="例：パティスリー ノヴァ"></label>
+
+      <label>●背景の色や背景の画像（どちらか）</label>
+      <div class="row">
+        <input class="input" type="text" name="bg_color" placeholder="例：#112244 / ネイビー系">
+        <input class="input" type="file" name="bg_image" accept="image/*">
+      </div>
+      <p class="help">※写真が1枚では足りない場合は下の「メインビジュアル写真」を追加してください。</p>
+
+      <label>●キャッチコピー・スローガン</label>
+      <input class="input" type="text" name="catchcopy" placeholder="例：「素材にこだわった手作りスイーツ」">
+
+      <label>●メインビジュアル写真（店舗外観・看板など）</label>
+      <div class="repeatable" id="main-visuals"></div>
+      <button type="button" class="btn add-btn" id="btn-add-main-visual">写真を追加</button>
+      <template id="tpl-main-visual">
+        <div class="item"><input class="input" type="file" name="main_visuals[]" accept="image/*"></div>
+      </template>
+
+      <label>●簡単な紹介文（1～2行）</label>
+      <textarea class="input" name="intro" rows="2" placeholder="例：四季の素材で作る焼き立て菓子を、毎日お届けします。"></textarea>
+
+      <label>●よくある質問（FAQ）</label>
+      <textarea class="input" name="faq" rows="4" placeholder="例：支払い方法、予約、アレルギー対応 など"></textarea>
+
+      <label>●アクセス</label>
+      <div class="row">
+        <input class="input" type="text" name="address" placeholder="住所を入力">
+        <input class="input" type="text" name="hours" placeholder="営業時間・定休日">
+      </div>
+
+      <label>●電話番号 / メールアドレス / SNSリンク</label>
+      <div class="row">
+        <input class="input" type="tel" name="tel" placeholder="電話番号">
+        <input class="input" type="email" name="email" placeholder="メールアドレス">
+      </div>
+      <div class="row">
+        <input class="input" type="url" name="sns_instax" placeholder="Instagram・X（旧Twitter）URL">
+        <input class="input" type="url" name="sns_fbly" placeholder="Facebook・LINE公式 URL">
+      </div>
+      <input class="input" type="url" name="sns_yt" placeholder="YouTube URL">
+    </fieldset>
+
+    <fieldset>
+      <legend>2. 店舗紹介・コンセプトページ</legend>
+      <label>●背景・こだわり・コンセプトの説明</label>
+      <textarea class="input" name="concept" rows="4"></textarea>
+      <label>●店舗の歴史やストーリー</label>
+      <textarea class="input" name="story" rows="4"></textarea>
+      <label>●店舗写真ギャラリー（外観・内観・雰囲気がわかる写真）</label>
+      <input class="input" type="file" name="gallery[]" multiple accept="image/*">
+    </fieldset>
+
+    <fieldset>
+      <legend>3. メニュー・商品ページ</legend>
+      <p class="help">必要な数だけ追加してください。</p>
+      <div class="repeatable" id="menu-items"></div>
+      <button type="button" class="btn add-btn" id="btn-add-menu-item">メニューを追加</button>
+      <template id="tpl-menu-item">
+        <div class="item">
+          <div class="item row-3">
+            <input class="input" type="file" name="menu_photo[]" accept="image/*">
+            <input class="input" type="text" name="menu_name[]" placeholder="商品名">
+            <input class="input" type="text" name="menu_desc[]" placeholder="説明">
+          </div>
+        </div>
+      </template>
+    </fieldset>
+
+    <fieldset>
+      <legend>4. お問い合わせページ</legend>
+      <label>●お問い合わせフォームを作成する場合は Formspree アカウントを作成してリンクを入力してください。</label>
+      <input class="input" type="url" name="formspree_link" placeholder="https://formspree.io/f/xxxxxx">
+    </fieldset>
+
+    <fieldset>
+      <legend>5. その他（あれば）</legend>
+      <label>プライバシーポリシーなど利用規約</label>
+      <textarea class="input" name="others" rows="4" placeholder="追加のご要望・注意点など"></textarea>
+    </fieldset>
+
+    <div class="card">
+      <label>ご希望プラン</label>
+      <select class="input" name="plan">
+        <option>ライト（2,500円/月）</option>
+        <option>スタンダード（3,500円/月）</option>
+        <option>プレミアム（4,500円/月）</option>
       </select>
-    </label>
+      <p class="help">無料制作後、内容にご納得いただけたタイミングでご契約ください。</p>
+    </div>
 
-    <h3>1. トップページ</h3>
-    <label>ロゴ<input type="file" name="logo"></label>
-    <label>店舗名<input type="text" name="shopname"></label>
-    <div id="bg-photos"></div>
-    <button type="button" id="add-bg-btn">背景写真追加</button>
-    <template id="bg-photo-template">
-      <label>背景写真<input type="file" name="bgphoto[]"></label>
-    </template>
-    <label>キャッチコピー<input type="text" name="catchcopy"></label>
-    <label>メインビジュアル<input type="file" name="mainvisual[]"></label>
-    <label>紹介文<textarea name="intro"></textarea></label>
-    <label>FAQ<textarea name="faq"></textarea></label>
-    <label>住所<input type="text" name="address"></label>
-    <label>営業時間<input type="text" name="hours"></label>
-    <label>電話番号<input type="text" name="tel"></label>
-    <label>メール<input type="email" name="contactmail"></label>
-    <label>Instagram/X<input type="url" name="sns1"></label>
-    <label>Facebook/LINE<input type="url" name="sns2"></label>
-    <label>YouTube<input type="url" name="sns3"></label>
-
-    <h3>2. 店舗紹介</h3>
-    <label>コンセプト<textarea name="concept"></textarea></label>
-    <label>歴史<textarea name="history"></textarea></label>
-    <label>ギャラリー<input type="file" name="gallery[]"></label>
-
-    <h3>3. メニュー・商品</h3>
-    <div id="menu-items"></div>
-    <button type="button" id="add-menu-btn">メニュー追加</button>
-    <template id="menu-item-template">
-      <label>写真<input type="file" name="menu_photo[]"></label>
-      <label>商品名<input type="text" name="menu_name[]"></label>
-      <label>説明<textarea name="menu_desc[]"></textarea></label>
-    </template>
-
-    <h3>4. お問い合わせページ</h3>
-    <p>●お問い合わせフォームを作成する場合は Formspree アカウントを作成してリンクを入力してください。 <a href="https://formspree.io/" target="_blank">Formspree公式サイト</a></p>
-
-    <h3>5. その他</h3>
-    <label>プライバシーポリシーなど<textarea name="other"></textarea></label>
-
-    <button type="submit">無料作成</button>
+    <button class="btn primary" type="submit">内容を保存（ダミー）</button>
+    <p class="small">※本フォームの送信はデモです。実際の送信先は別途ご指定ください。</p>
   </form>
 </main>
+
+<footer class="footer">© <span id="y"></span> NovaSite</footer>
 <script src="script.js"></script>
-</body>
-</html>
+<script>document.getElementById('y').textContent = new Date().getFullYear();</script>
+</body></html>
