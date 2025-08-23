@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NovaSite - ウェブサイト作成フォーム</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>ウェブサイト作成フォーム</h1>
+</header>
+<main>
+  <form action="https://formspree.io/f/xovlgzzy" method="POST">
+    <label>名前<input type="text" name="name"></label>
+    <label>メールアドレス<input type="email" name="email"></label>
+
+    <label>ご希望プラン
+      <select name="plan">
+        <option>ライト（3,000円/月・年間契約）</option>
+        <option>スタンダード（4,000円/月）</option>
+        <option>プレミアム（5,000円/月）</option>
+        <option>未定</option>
+      </select>
+    </label>
+
+    <h3>1. トップページ</h3>
+    <label>ロゴ<input type="file" name="logo"></label>
+    <label>店舗名<input type="text" name="shopname"></label>
+    <div id="bg-photos"></div>
+    <button type="button" id="add-bg-btn">背景写真追加</button>
+    <template id="bg-photo-template">
+      <label>背景写真<input type="file" name="bgphoto[]"></label>
+    </template>
+    <label>キャッチコピー<input type="text" name="catchcopy"></label>
+    <label>メインビジュアル<input type="file" name="mainvisual[]"></label>
+    <label>紹介文<textarea name="intro"></textarea></label>
+    <label>FAQ<textarea name="faq"></textarea></label>
+    <label>住所<input type="text" name="address"></label>
+    <label>営業時間<input type="text" name="hours"></label>
+    <label>電話番号<input type="text" name="tel"></label>
+    <label>メール<input type="email" name="contactmail"></label>
+    <label>Instagram/X<input type="url" name="sns1"></label>
+    <label>Facebook/LINE<input type="url" name="sns2"></label>
+    <label>YouTube<input type="url" name="sns3"></label>
+
+    <h3>2. 店舗紹介</h3>
+    <label>コンセプト<textarea name="concept"></textarea></label>
+    <label>歴史<textarea name="history"></textarea></label>
+    <label>ギャラリー<input type="file" name="gallery[]"></label>
+
+    <h3>3. メニュー・商品</h3>
+    <div id="menu-items"></div>
+    <button type="button" id="add-menu-btn">メニュー追加</button>
+    <template id="menu-item-template">
+      <label>写真<input type="file" name="menu_photo[]"></label>
+      <label>商品名<input type="text" name="menu_name[]"></label>
+      <label>説明<textarea name="menu_desc[]"></textarea></label>
+    </template>
+
+    <h3>4. お問い合わせページ</h3>
+    <p>●お問い合わせフォームを作成する場合は Formspree アカウントを作成してリンクを入力してください。 <a href="https://formspree.io/" target="_blank">Formspree公式サイト</a></p>
+
+    <h3>5. その他</h3>
+    <label>プライバシーポリシーなど<textarea name="other"></textarea></label>
+
+    <button type="submit">無料作成</button>
+  </form>
+</main>
+<script src="script.js"></script>
+</body>
+</html>
