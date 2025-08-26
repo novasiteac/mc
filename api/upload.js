@@ -10,7 +10,8 @@ export default async (req, res) => {
     return res.status(405).send("Method Not Allowed");
   }
 
-  const form = new formidable.IncomingForm();
+  // v3: use formidable() instead of new IncomingForm()
+  const form = formidable({ multiples: false });
 
   form.parse(req, async (err, fields, files) => {
     if (err) {
@@ -24,11 +25,13 @@ export default async (req, res) => {
     const name = fields.name?.[0] || "Anonymous";
     const email = fields.email?.[0] || "No email";
 
-    const file = files.logo_photos?.[0] ||
-                 files.main_visuals?.[0] ||
-                 files.bg_image?.[0] ||
-                 files.photo?.[0] ||
-                 null;
+    // Grab the first file (adjust field names as needed)
+    const file =
+      files.logo_photos?.[0] ||
+      files.main_visuals?.[0] ||
+      files.bg_image?.[0] ||
+      files.photo?.[0] ||
+      null;
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
