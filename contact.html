@@ -19,16 +19,12 @@
   <h1 class="reveal">お問い合わせ</h1>
   <p class="small">script.js の <code>FORMSPREE_CONTACT_ENDPOINT</code> にあなたの Formspree URL を設定すると送信できます。</p>
   <form id="contact-form" class="card reveal"
-  action="https://formsubmit.co/novasite.official@gmail.com"
+  action="/api/upload"
   method="POST">
     <label>お名前<input class="input" name="name" required></label>
     <label>メール<input class="input" type="email" name="email" required></label>
     <label>内容<textarea class="input" name="message" rows="5" required></textarea></label>
     <button class="btn primary" type="submit">送信</button>
-  
-    <input type="hidden" name="_replyto" value="novasite.official@gmail.com">
-    <input type="hidden" name="_next" value="https://novasite.com/thank-you.html">
-
   </form>
 </main>
 
