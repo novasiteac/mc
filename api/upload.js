@@ -1,38 +1,33 @@
+// api/upload.js
 import formidable from "formidable";
+import fs from "fs";
 import nodemailer from "nodemailer";
 
 export const config = {
-  api: { bodyParser: false },
+  api: {
+    bodyParser: false,
+  },
 };
 
-export default async (req, res) => {
+export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).send("Method Not Allowed");
+    return res.status(405).json({ error: "Method not allowed" });
   }
 
-  // v3: use formidable() instead of new IncomingForm()
-  const form = formidable({ multiples: false });
+  console.log("Upload API called...");
 
-  form.parse(req, async (err, fields, files) => {
-    if (err) {
-      console.error("Form parse error:", err);
-      return res.status(500).send("Error parsing the form");
-    }
+  const form = formidable({
+    multiples: true,
+    keepExtensions: true,
+    allowEmptyFiles: false,
+  });
 
-    console.log("FIELDS:", fields);
-    console.log("FILES:", files);
+  try {
+    const [fields, files] = await form.parse(req);
+    console.log("Parsed fields:", fields);
+    console.log("Parsed files:", files);
 
-    const name = fields.name?.[0] || "Anonymous";
-    const email = fields.email?.[0] || "No email";
-
-    // Grab the first file (adjust field names as needed)
-    const file =
-      files.logo_photos?.[0] ||
-      files.main_visuals?.[0] ||
-      files.bg_image?.[0] ||
-      files.photo?.[0] ||
-      null;
-
+    // Gmail transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -41,21 +36,29 @@ export default async (req, res) => {
       },
     });
 
-    try {
-      await transporter.sendMail({
-        from: process.env.GMAIL_USER,
-        to: process.env.GMAIL_USER,
-        subject: `New form submission from ${name}`,
-        text: `Sender: ${name} (${email})`,
-        attachments: file
-          ? [{ filename: file.originalFilename, path: file.filepath }]
-          : [],
+    const attachments = [];
+    for (const key in files) {
+      const fileArray = Array.isArray(files[key]) ? files[key] : [files[key]];
+      fileArray.forEach((f) => {
+        attachments.push({
+          filename: f.originalFilename,
+          path: f.filepath,
+        });
       });
-      console.log("Email sent successfully");
-      res.status(200).send("Form submitted successfully!");
-    } catch (error) {
-      console.error("Email send error:", error);
-      res.status(500).send("Failed to send email");
     }
-  });
-};
+
+    const info = await transporter.sendMail({
+      from: process.env.GMAIL_USER,
+      to: process.env.GMAIL_USER,
+      subject: "New form submission",
+      text: JSON.stringify(fields, null, 2),
+      attachments,
+    });
+
+    console.log("Mail sent:", info.messageId);
+    res.status(200).json({ success: true });
+  } catch (err) {
+    console.error("Form parse or mail send error:", err);
+    res.status(500).json({ error: err.message });
+  }
+}
