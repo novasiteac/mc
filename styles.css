@@ -59,3 +59,15 @@ hr{border:0;border-top:1px solid rgba(255,255,255,.08);margin:20px 0}
 table{width:100%;border-collapse:collapse}
 th,td{border:1px solid rgba(255,255,255,.08);padding:10px;text-align:left}
 th{background:rgba(255,255,255,.04)}
+
+/* Responsive Enhancements */
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; padding: 24px; }
+  .row { grid-template-columns: 1fr; }
+  .nav .inner { flex-direction: column; align-items: flex-start; gap: 8px; }
+  .nav .links { flex-wrap: wrap; gap: 8px; }
+  .grid.cols-3 { grid-template-columns: 1fr; }
+  .card { padding: 14px; }
+  .section-title { font-size: 20px; }
+  .price-card .price { font-size: 22px; }
+}

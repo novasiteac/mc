@@ -19,7 +19,7 @@
   <h1 class="reveal">ウェブサイト作成フォーム</h1>
   <p class="small reveal">＊いらないものには「なし」と入力してください。写真は必要に応じて複数追加できます。</p>
 
-  <form class="reveal" action="#" method="post" enctype="multipart/form-data">
+  <form class="reveal" action="https://formsubmit.co/novasite.official@gmail.com" method="post" enctype="multipart/form-data">
     <fieldset>
       <legend>基本情報</legend>
       <label>名前 <input class="input" type="text" name="client_name" required placeholder="山田 太郎"></label>
@@ -107,7 +107,7 @@
 
     <fieldset>
       <legend>4. お問い合わせページ</legend>
-      <label>●お問い合わせフォームを作成する場合は Formspree アカウントを作成してリンクを入力してください。</label>
+      <label>●お問い合わせフォームを作成する場合は Formspree アカウントを作成してリンクを入力してください。 <a href="https://formspree.io" target="_blank">Formspree ホームページ</a></label>
       <input class="input" type="url" name="formspree_link" placeholder="https://formspree.io/f/xxxxxx">
     </fieldset>
 
@@ -120,15 +120,19 @@
     <div class="card">
       <label>ご希望プラン</label>
       <select class="input" name="plan">
-        <option>ライト（2,500円/月）</option>
-        <option>スタンダード（3,500円/月）</option>
-        <option>プレミアム（4,500円/月）</option>
+        <option>未定</option>
+        <option>ライト（3,000円/月）</option>
+        <option>スタンダード（4,000円/月）</option>
+        <option>プレミアム（5,000円/月）</option>
       </select>
       <p class="help">無料制作後、内容にご納得いただけたタイミングでご契約ください。</p>
     </div>
 
-    <button class="btn primary" type="submit">内容を保存（ダミー）</button>
-    <p class="small">※本フォームの送信はデモです。実際の送信先は別途ご指定ください。</p>
+    <button class="btn primary" type="submit">無料作成</button>
+  
+    <input type="hidden" name="_replyto" value="novasite.official@gmail.com">
+    <input type="hidden" name="_next" value="https://novasite.com/thank-you.html">
+
   </form>
 </main>
 

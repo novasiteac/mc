@@ -1,5 +1,5 @@
 // NovaSite JS (JavaScript animations & helpers)
-const FORMSPREE_CONTACT_ENDPOINT = ""; // ← ここに Formspree のフォームURLを入れると /contact.html が送信可能になります
+const FORMSPREE_CONTACT_ENDPOINT = "https://formspree.io/f/xovlgzzy"; // ← ここに Formspree のフォームURLを入れると /contact.html が送信可能になります
 
 // Simple scroll reveal
 const revealEls = document.querySelectorAll('.reveal');
