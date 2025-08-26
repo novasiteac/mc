@@ -1,12 +1,8 @@
-// api/upload.js
 import formidable from "formidable";
-import fs from "fs";
 import nodemailer from "nodemailer";
 
 export const config = {
-  api: {
-    bodyParser: false,
-  },
+  api: { bodyParser: false },
 };
 
 export default async function handler(req, res) {
@@ -19,7 +15,8 @@ export default async function handler(req, res) {
   const form = formidable({
     multiples: true,
     keepExtensions: true,
-    allowEmptyFiles: false,
+    allowEmptyFiles: true,   // allow empty files
+    minFileSize: 0           // allow 0-byte files
   });
 
   try {
@@ -27,7 +24,6 @@ export default async function handler(req, res) {
     console.log("Parsed fields:", fields);
     console.log("Parsed files:", files);
 
-    // Gmail transporter
     const transporter = nodemailer.createTransport({
       service: "gmail",
       auth: {
@@ -40,14 +36,16 @@ export default async function handler(req, res) {
     for (const key in files) {
       const fileArray = Array.isArray(files[key]) ? files[key] : [files[key]];
       fileArray.forEach((f) => {
-        attachments.push({
-          filename: f.originalFilename,
-          path: f.filepath,
-        });
+        if (f && f.filepath) {
+          attachments.push({
+            filename: f.originalFilename || "file",
+            path: f.filepath,
+          });
+        }
       });
     }
 
-    const info = await transporter.sendMail({
+    await transporter.sendMail({
       from: process.env.GMAIL_USER,
       to: process.env.GMAIL_USER,
       subject: "New form submission",
@@ -55,7 +53,6 @@ export default async function handler(req, res) {
       attachments,
     });
 
-    console.log("Mail sent:", info.messageId);
     res.status(200).json({ success: true });
   } catch (err) {
     console.error("Form parse or mail send error:", err);
