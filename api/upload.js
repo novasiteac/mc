@@ -7,22 +7,18 @@ export const config = {
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ error: "Method not allowed" });
+    return res.status(405).send("Method Not Allowed");
   }
-
-  console.log("Upload API called...");
 
   const form = formidable({
     multiples: true,
     keepExtensions: true,
-    allowEmptyFiles: true,   // allow empty files
-    minFileSize: 0           // allow 0-byte files
+    allowEmptyFiles: true,
+    minFileSize: 0,
   });
 
   try {
     const [fields, files] = await form.parse(req);
-    console.log("Parsed fields:", fields);
-    console.log("Parsed files:", files);
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -53,9 +49,19 @@ export default async function handler(req, res) {
       attachments,
     });
 
-    res.status(200).json({ success: true });
+    // Instead of JSON, return HTML success page
+    res.setHeader("Content-Type", "text/html; charset=utf-8");
+    res.end(`<!doctype html>
+<html lang="ja"><head>
+<meta charset="utf-8"><title>送信完了</title>
+<link rel="stylesheet" href="/styles.css">
+</head><body class="container">
+  <h1>送信完了しました</h1>
+  <p>お問い合わせいただきありがとうございます。送信が正常に完了しました。</p>
+  <a href="/index.html" class="btn">ホームへ戻る</a>
+</body></html>`);
   } catch (err) {
     console.error("Form parse or mail send error:", err);
-    res.status(500).json({ error: err.message });
+    res.status(500).send("エラーが発生しました: " + err.message);
   }
 }
