@@ -45,7 +45,39 @@ export default async function handler(req, res) {
       from: process.env.GMAIL_USER,
       to: process.env.GMAIL_USER,
       subject: "New form submission",
-      text: JSON.stringify(fields, null, 2),
+      text: (() => {
+        const labels = {
+          "client_name": "お名前",
+          "client_email": "メールアドレス",
+          "shop_name": "店舗名",
+          "bg_color": "背景色",
+          "catchcopy": "キャッチコピー",
+          "intro": "紹介文",
+          "faq": "よくある質問",
+          "address": "住所",
+          "hours": "営業時間",
+          "tel": "電話番号",
+          "email": "メール",
+          "sns_instax": "Instagram・X",
+          "sns_fbly": "Facebook・LINE",
+          "sns_yt": "YouTube",
+          "concept": "コンセプト説明",
+          "story": "店舗の歴史",
+          "menu_name[]": "メニュー名",
+          "menu_desc[]": "メニュー説明",
+          "formspree_link": "Formspreeリンク",
+          "others": "その他",
+          "plan": "プラン"
+        };
+        let out = "";
+        for (const key in fields) {
+          let val = fields[key];
+          if (Array.isArray(val)) val = val.join(", ");
+          if (!val) val = "（未入力）";
+          out += (labels[key] || key) + ": " + val + "\n";
+        }
+        return out;
+      })(),
       attachments,
     });
 
