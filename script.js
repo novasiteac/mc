@@ -48,3 +48,14 @@ if(contactForm){
     else { alert('送信に失敗しました。URLをご確認ください。'); }
   });
 }
+
+
+// ハンバーガーメニュー
+const navToggle = document.getElementById('nav-toggle');
+const navLinks = document.getElementById('nav-links');
+if(navToggle && navLinks){
+  navToggle.addEventListener('click', ()=>{
+    navToggle.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+}
