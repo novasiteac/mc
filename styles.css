@@ -157,3 +157,34 @@ th{background:rgba(255,255,255,.04)}
   .nav .links.open a:nth-child(4) { transition-delay: 0.2s; }
   .nav .links.open a:nth-child(5) { transition-delay: 0.25s; }
 }
+
+
+/* --- Custom Enhancements (2025-09-01) --- */
+
+/* モバイルナビ改善 */
+@media (max-width: 768px) {
+  .nav .links {
+    background: linear-gradient(180deg, #1b2142, #0e1530);
+    padding: 10px 0;
+    border: 1px solid rgba(255,255,255,0.08);
+  }
+  .nav .links a {
+    display: block;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .nav .links a:last-child {
+    border-bottom: none;
+  }
+}
+
+/* アニメーション改善 */
+.nav .links.open a {
+  animation: fadeInSlide 0.4s ease forwards;
+}
+@keyframes fadeInSlide {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
