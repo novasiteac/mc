@@ -131,9 +131,7 @@ th{background:rgba(255,255,255,.04)}
 }
 
 
-/* --- Final Fix + Fancy Menu Design (from novasite_fixed11) --- */
-
-/* ハンバーガーボタン強制表示 */
+/* --- Final Integrated Fix: visible hamburger + novasite_fixed11 design --- */
 @media (max-width: 768px) {
   .nav-toggle {
     display: flex !important;
@@ -171,19 +169,19 @@ th{background:rgba(255,255,255,.04)}
     transform: rotate(-45deg) translate(6px, -6px);
   }
 
-  /* ナビゲーションメニューのデザイン */
+  /* メニュー全体のデザイン（novasite_fixed11 風） */
   nav ul {
     position: absolute;
     top: 60px;
     right: 15px;
-    background: rgba(0, 0, 0, 0.9);
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    background: rgba(0, 0, 0, 0.95);
+    padding: 20px 25px;
+    border-radius: 14px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.35);
     display: none;
     flex-direction: column;
-    gap: 12px;
-    animation: fadeSlideIn 0.3s ease forwards;
+    gap: 14px;
+    animation: fadeSlideIn 0.35s ease forwards;
   }
 
   nav ul.show {
@@ -194,7 +192,7 @@ th{background:rgba(255,255,255,.04)}
     color: #fff !important;
     font-size: 18px;
     text-decoration: none;
-    transition: color 0.2s;
+    transition: color 0.25s;
   }
 
   nav ul li a:hover {
@@ -204,7 +202,7 @@ th{background:rgba(255,255,255,.04)}
   @keyframes fadeSlideIn {
     from {
       opacity: 0;
-      transform: translateY(-10px);
+      transform: translateY(-12px);
     }
     to {
       opacity: 1;
