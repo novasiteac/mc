@@ -131,14 +131,28 @@ th{background:rgba(255,255,255,.04)}
 }
 
 
-/* --- Debug Fix: Hamburger button visibility --- */
+/* --- Final Fix: Force visible hamburger button --- */
 @media (max-width: 768px) {
+  .nav-toggle {
+    display: flex !important;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    width: 40px;
+    height: 32px;
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    z-index: 9999 !important;
+  }
+
   .nav-toggle span {
     display: block !important;
-    width: 32px !important;
-    height: 5px !important;
-    margin: 6px 0 !important;
-    background: red !important;  /* デバッグのため赤色に変更 */
+    width: 28px !important;
+    height: 3px !important;
+    background: #ffffff !important; /* 白で固定 */
+    border-radius: 2px;
     opacity: 1 !important;
     visibility: visible !important;
   }
