@@ -73,7 +73,7 @@ th{background:rgba(255,255,255,.04)}
 }
 
 
-
+/* --- ハンバーガーメニュー修正 --- */
 .nav-toggle {
   display: none;
   flex-direction: column;
@@ -84,29 +84,23 @@ th{background:rgba(255,255,255,.04)}
   border: none;
   cursor: pointer;
   margin-left: auto;
-  padding: 0;
 }
-
 .nav-toggle span {
   display: block;
   height: 3px;
   background: var(--ink);
   border-radius: 2px;
-  transition: transform 0.35s ease, opacity 0.25s ease;
-  transform-origin: center;
+  transition: 0.3s;
 }
-
-/* アニメーション時 */
 .nav-toggle.open span:nth-child(1) {
-  transform: rotate(45deg) translateY(9px);
+  transform: rotate(45deg) translateY(8px);
 }
 .nav-toggle.open span:nth-child(2) {
   opacity: 0;
 }
 .nav-toggle.open span:nth-child(3) {
-  transform: rotate(-45deg) translateY(-9px);
+  transform: rotate(-45deg) translateY(-8px);
 }
-
 
 /* スマホ用メニュー展開 */
 @media (max-width: 768px) {
@@ -137,67 +131,22 @@ th{background:rgba(255,255,255,.04)}
 }
 
 
-
-
-
-
+/* --- 強制修正: スマホでハンバーガーボタンを必ず見せる --- */
 @media (max-width: 768px) {
-  .nav .links a {
-    opacity: 0;
-    transform: translateY(10px);
-    transition: opacity 0.35s ease, transform 0.35s ease;
+  .nav-toggle {
+    display: flex !important;
+    position: absolute !important;
+    top: 15px !important;
+    right: 15px !important;
+    z-index: 9999 !important; /* 最前面に表示 */
   }
-  .nav .links.open a {
-    opacity: 1;
-    transform: translateY(0);
+
+  .nav-toggle span {
+    display: block !important;
+    width: 28px !important;
+    height: 3px !important;
+    margin: 5px 0 !important;
+    background: #ffffff !important; /* 白で確実に見える */
+    border-radius: 2px !important;
   }
-  .nav .links.open a:nth-child(1) { transition-delay: 0.05s; }
-  .nav .links.open a:nth-child(2) { transition-delay: 0.1s; }
-  .nav .links.open a:nth-child(3) { transition-delay: 0.15s; }
-  .nav .links.open a:nth-child(4) { transition-delay: 0.2s; }
-  .nav .links.open a:nth-child(5) { transition-delay: 0.25s; }
-}
-
-
-/* --- Custom Enhancements (2025-09-01) --- */
-
-/* モバイルナビ改善 */
-@media (max-width: 768px) {
-  .nav .links {
-    background: linear-gradient(180deg, #1b2142, #0e1530);
-    padding: 10px 0;
-    border: 1px solid rgba(255,255,255,0.08);
-  }
-  .nav .links a {
-    display: block;
-    padding: 12px 16px;
-    border-bottom: 1px solid rgba(255,255,255,0.06);
-    color: var(--ink);
-    font-weight: 600;
-  }
-  .nav .links a:last-child {
-    border-bottom: none;
-  }
-}
-
-/* アニメーション改善 */
-.nav .links.open a {
-  animation: fadeInSlide 0.4s ease forwards;
-}
-@keyframes fadeInSlide {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-
-/* --- Fix: Ensure hamburger button is always visible --- */
-.nav-toggle {
-  display: flex !important; /* 常に表示 */
-  position: relative;
-  z-index: 2000; /* 他の要素に隠れないように */
-}
-.nav-toggle span {
-  background-color: #ffffff !important; /* 白に固定 */
-  opacity: 1 !important;
-  visibility: visible !important;
 }
