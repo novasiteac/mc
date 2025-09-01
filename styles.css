@@ -131,7 +131,9 @@ th{background:rgba(255,255,255,.04)}
 }
 
 
-/* --- Final Fix: Force visible hamburger button --- */
+/* --- Final Fix + Fancy Menu Design (from novasite_fixed11) --- */
+
+/* ハンバーガーボタン強制表示 */
 @media (max-width: 768px) {
   .nav-toggle {
     display: flex !important;
@@ -155,5 +157,58 @@ th{background:rgba(255,255,255,.04)}
     border-radius: 2px;
     opacity: 1 !important;
     visibility: visible !important;
+    transition: all 0.3s ease;
+  }
+
+  /* 開閉アニメーション */
+  .nav-toggle.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+  .nav-toggle.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .nav-toggle.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+  }
+
+  /* ナビゲーションメニューのデザイン */
+  nav ul {
+    position: absolute;
+    top: 60px;
+    right: 15px;
+    background: rgba(0, 0, 0, 0.9);
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    display: none;
+    flex-direction: column;
+    gap: 12px;
+    animation: fadeSlideIn 0.3s ease forwards;
+  }
+
+  nav ul.show {
+    display: flex;
+  }
+
+  nav ul li a {
+    color: #fff !important;
+    font-size: 18px;
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav ul li a:hover {
+    color: #4fc3f7;
+  }
+
+  @keyframes fadeSlideIn {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 }
