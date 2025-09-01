@@ -56,6 +56,6 @@ const navLinks = document.getElementById('nav-links');
 if(navToggle && navLinks){
   navToggle.addEventListener('click', ()=>{
     navToggle.classList.toggle('open');
-    navLinks.classList.toggle('show');
+    navLinks.classList.toggle('open');
   });
 }

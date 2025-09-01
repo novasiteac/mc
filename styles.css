@@ -184,7 +184,7 @@ th{background:rgba(255,255,255,.04)}
     animation: fadeSlideIn 0.35s ease forwards;
   }
 
-  nav ul.show {
+  nav ul.open {
     display: flex;
   }
 
@@ -235,9 +235,9 @@ th{background:rgba(255,255,255,.04)}
     animation: flatMenuFade 0.25s ease forwards;
   }
 
-  nav ul.show,
-  nav #nav-links.show,
-  nav .links.show {
+  nav ul.open,
+  nav #nav-links.open,
+  nav .links.open {
     display: flex !important;
   }
 
