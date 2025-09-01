@@ -210,3 +210,31 @@ th{background:rgba(255,255,255,.04)}
     }
   }
 }
+
+
+/* --- Hamburger Button Pressed State Enhancement --- */
+@media (max-width: 768px) {
+  .nav-toggle.open {
+    background: rgba(255,255,255,0.08);
+    border-radius: 10px;
+    padding: 6px;
+    transition: background 0.25s ease;
+  }
+  .nav-toggle.open span {
+    background: #ff6666 !important; /* 赤っぽく変化して目立つ */
+  }
+
+  /* Dim overlay when menu is open */
+  body::after {
+    content: "";
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    backdrop-filter: blur(2px);
+    z-index: 999;
+  }
+  body.menu-open::after {
+    display: block;
+  }
+}
