@@ -131,22 +131,15 @@ th{background:rgba(255,255,255,.04)}
 }
 
 
-/* --- 強制修正: スマホでハンバーガーボタンを必ず見せる --- */
+/* --- Debug Fix: Hamburger button visibility --- */
 @media (max-width: 768px) {
-  .nav-toggle {
-    display: flex !important;
-    position: absolute !important;
-    top: 15px !important;
-    right: 15px !important;
-    z-index: 9999 !important; /* 最前面に表示 */
-  }
-
   .nav-toggle span {
     display: block !important;
-    width: 28px !important;
-    height: 3px !important;
-    margin: 5px 0 !important;
-    background: #ffffff !important; /* 白で確実に見える */
-    border-radius: 2px !important;
+    width: 32px !important;
+    height: 5px !important;
+    margin: 6px 0 !important;
+    background: red !important;  /* デバッグのため赤色に変更 */
+    opacity: 1 !important;
+    visibility: visible !important;
   }
 }
