@@ -7,10 +7,8 @@ export const config = {
 
 // ラベル（フィールド名→日本語）
 const LABELS = {
-  // 基本情報
   "client_name": "お名前",
   "client_email": "メールアドレス",
-  // トップページ
   "shop_name": "店舗名",
   "bg_color": "背景色",
   "catchcopy": "キャッチコピー",
@@ -23,19 +21,16 @@ const LABELS = {
   "sns_instax": "Instagram・X",
   "sns_fbly": "Facebook・LINE",
   "sns_yt": "YouTube",
-  // 店舗紹介
   "concept": "コンセプト説明",
   "story": "店舗の歴史",
-  // メニュー
-  "menu_name[]": "メニュー名",
-  "menu_desc[]": "メニュー説明",
-  // お問い合わせ
+  "menu_name[]": "商品名",
+  "menu_price[]": "値段",
+  "menu_desc[]": "商品説明",
   "formspree_link": "Formspreeリンク",
-  // その他
   "others": "その他",
   "plan": "プラン",
 
-  // 添付ファイル(写真)
+  // 添付写真系
   "logo_photos[]": "ロゴ写真",
   "bg_image": "背景画像",
   "main_visuals[]": "メインビジュアル",
@@ -43,12 +38,12 @@ const LABELS = {
   "menu_photo[]": "メニュー写真"
 };
 
-// セクション定義（メール本文をページごとに見出しで分ける）
+// セクション定義
 const SECTIONS = {
   "基本情報": ["client_name","client_email"],
-  "1. トップページ（ホーム）": ["shop_name","bg_color","catchcopy","intro","faq","address","hours","tel","email","sns_instax","sns_fbly","sns_yt"],
-  "2. 店舗紹介・コンセプトページ": ["concept","story"],
-  "3. メニュー・商品ページ": [], // メニューは特別フォーマットで後段に出力
+  "1. トップページ（ホーム）": ["shop_name","bg_color","catchcopy","intro","faq","address","hours","tel","email","sns_instax","sns_fbly","sns_yt","logo_photos[]","bg_image","main_visuals[]"],
+  "2. 店舗紹介・コンセプトページ": ["concept","story","gallery[]"],
+  "3. メニュー・商品ページ": ["menu_name[]","menu_price[]","menu_desc[]","menu_photo[]"],
   "4. お問い合わせページ": ["formspree_link"],
   "5. その他": ["others","plan"]
 };
@@ -81,7 +76,7 @@ export default async function handler(req, res) {
       },
     });
 
-    // 添付ファイル
+    // 添付ファイルリスト
     const attachments = [];
     for (const key in files) {
       const arr = Array.isArray(files[key]) ? files[key] : [files[key]];
@@ -95,45 +90,50 @@ export default async function handler(req, res) {
       });
     }
 
-    // メール本文（セクション見出し + 各項目）
+    // 本文作成
     let out = "";
 
-    // 1) 各セクション（メニュー以外）
+    // 各セクション出力
     for (const section in SECTIONS) {
-      if (section === "3. メニュー・商品ページ") continue; // 後で特別出力
       out += `\n=== ${section} ===\n`;
-      for (const key of SECTIONS[section]) {
-        let val = fields[key];
-        if (Array.isArray(val)) val = val.join(", ");
-        if (val === undefined || val === null || val === "") val = "（未入力）";
-        out += `${(LABELS[key] || key)}: ${val}\n`;
-      }
-    }
-
-    // 2) メニュー（名前と説明を#番号でペア表示）
-    const menuNames = normArray(fields["menu_name[]"]);
-    const menuDescs = normArray(fields["menu_desc[]"]);
-    out += `\n=== 3. メニュー・商品ページ ===\n`;
-    if (menuNames.length === 0 && menuDescs.length === 0) {
-      out += "（未入力）\n";
-    } else {
-      const len = Math.max(menuNames.length, menuDescs.length);
-      for (let i = 0; i < len; i++) {
-        const n = (menuNames[i] && String(menuNames[i]).trim()) ? menuNames[i] : "（未入力）";
-        const d = (menuDescs[i] && String(menuDescs[i]).trim()) ? menuDescs[i] : "（未入力）";
-        out += `#${i+1} ${n} - ${d}\n`; // 例: #1 ショートケーキ - 旬のいちごを使用
-      }
-    }
-
-    // 3) 添付写真の一覧（どの写真か分かるように）
-    if (Object.keys(files).length) {
-      out += `\n=== 添付写真 ===\n`;
-      for (const key in files) {
-        const arr = Array.isArray(files[key]) ? files[key] : [files[key]];
-        arr.forEach((f, i) => {
-          const name = f?.originalFilename || "file";
-          out += `${(LABELS[key] || key)} ${i+1}: ${name}\n`;
-        });
+      if (section === "3. メニュー・商品ページ") {
+        // メニュー専用処理
+        const menuNames = normArray(fields["menu_name[]"]);
+        const menuPrices = normArray(fields["menu_price[]"]);
+        const menuDescs = normArray(fields["menu_desc[]"]);
+        const menuPhotos = Array.isArray(files["menu_photo[]"]) ? files["menu_photo[]"] : (files["menu_photo[]"] ? [files["menu_photo[]"]] : []);
+        if (menuNames.length === 0 && menuPrices.length === 0 && menuDescs.length === 0 && menuPhotos.length === 0) {
+          out += "（未入力）\n";
+        } else {
+          const len = Math.max(menuNames.length, menuPrices.length, menuDescs.length, menuPhotos.length);
+          for (let i = 0; i < len; i++) {
+            const n = (menuNames[i] && String(menuNames[i]).trim()) ? menuNames[i] : "（未入力）";
+            const p = (menuPrices[i] && String(menuPrices[i]).trim()) ? menuPrices[i] : "（未入力）";
+            const d = (menuDescs[i] && String(menuDescs[i]).trim()) ? menuDescs[i] : "（未入力）";
+            const photoName = menuPhotos[i]?.originalFilename ? `メニュー写真_${i+1}` : "";
+            out += `#${i+1} ${photoName} ${n} (${p}) - ${d}\n`;
+          }
+        }
+      } else {
+        for (const key of SECTIONS[section]) {
+          if (key.endsWith("[]") || key.includes("image") || key.includes("visual") || key.includes("gallery")) {
+            // 写真系
+            const arr = Array.isArray(files[key]) ? files[key] : (files[key] ? [files[key]] : []);
+            if (arr.length) {
+              arr.forEach((f,i)=>{
+                out += `${(LABELS[key] || key)}_${i+1}\n`;
+              });
+            } else {
+              // 写真がない場合はスキップ（空行不要）
+            }
+          } else {
+            // 通常フィールド
+            let val = fields[key];
+            if (Array.isArray(val)) val = val.join(", ");
+            if (val === undefined || val === null || val === "") val = "（未入力）";
+            out += `${(LABELS[key] || key)}: ${val}\n`;
+          }
+        }
       }
     }
 
@@ -145,7 +145,7 @@ export default async function handler(req, res) {
       attachments,
     });
 
-    // 成功ページ（HTML）
+    // 成功ページ
     res.setHeader("Content-Type", "text/html; charset=utf-8");
     res.end(`<!doctype html>
 <html lang="ja"><head>
