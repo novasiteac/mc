@@ -34,6 +34,7 @@ export default async function handler(req, res) {
       fileArray.forEach((f) => {
         if (f && f.filepath) {
           attachments.push({
+            filename: (labels[key] || key) + "_" + (f.originalFilename || "file"),
             filename: f.originalFilename || "file",
             path: f.filepath,
           });
@@ -70,6 +71,24 @@ export default async function handler(req, res) {
           "plan": "プラン"
         };
         let out = "";
+        // ページごとのセクション定義
+        const sections = {
+          "基本情報": ["client_name","client_email"],
+          "1. トップページ（ホーム）": ["shop_name","bg_color","catchcopy","intro","faq","address","hours","tel","email","sns_instax","sns_fbly","sns_yt"],
+          "2. 店舗紹介・コンセプトページ": ["concept","story"],
+          "3. メニュー・商品ページ": ["menu_name[]","menu_desc[]"],
+          "4. お問い合わせページ": ["formspree_link"],
+          "5. その他": ["others","plan"]
+        };
+        for(const section in sections){
+          out += "\n=== " + section + " ===\n";
+          for(const key of sections[section]){
+            let val = fields[key];
+            if(Array.isArray(val)) val = val.join(", ");
+            if(!val) val = "（未入力）";
+            out += (labels[key] || key) + ": " + val + "\n";
+          }
+        }
         for (const key in fields) {
           let val = fields[key];
           if (Array.isArray(val)) val = val.join(", ");
