@@ -6,7 +6,7 @@
 </head><body>
 <nav class="nav">
   <div class="inner">
-    <a class="logo" href="index.html"><img src="assets/logo.svg" alt="NovaSiteロゴ"></a>
+    <a class="logo" href="index.html"><img src="assets/logo.svg" alt="NovaSiteロゴ"><span>NovaSite</span></a>
     <button class="nav-toggle" id="nav-toggle" aria-label="メニュー">
       <span></span><span></span><span></span>
     </button>
@@ -21,7 +21,7 @@
 </nav>
 
 <main class="container">
-  <h1 style="white-space:nowrap" class="reveal">ウェブサイト作成フォーム</h1>
+  <h1 class="reveal">ウェブサイト作成フォーム</h1>
   <p class="small reveal">＊いらないものには「なし」と入力してください。写真は必要に応じて複数追加できます。</p>
 
   <form class="reveal" action="/api/upload" method="post" enctype="multipart/form-data">
@@ -104,7 +104,6 @@
           <div class="item row-3">
             <input class="input" type="file" name="menu_photo[]" accept="image/*">
             <input class="input" type="text" name="menu_name[]" placeholder="商品名">
-            <input class="input" type="text" name="menu_price[]" placeholder="値段">
             <input class="input" type="text" name="menu_desc[]" placeholder="説明">
           </div>
         </div>
