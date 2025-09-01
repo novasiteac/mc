@@ -138,42 +138,66 @@ th{background:rgba(255,255,255,.04)}
 
 
 
-/* --- メニューリンクのアニメーション --- */
-.nav .links a {
-  color: var(--ink);
-  font-weight: 600;
-  opacity: 0;
-  transform: translateY(10px);
-  transition: opacity 0.35s ease, transform 0.35s ease;
-}
-
-.nav .links a:hover {
-  color: var(--brand);
-}
-
-.nav .links.open a {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.nav .links.open a:nth-child(1) { transition-delay: 0.05s; }
-.nav .links.open a:nth-child(2) { transition-delay: 0.1s; }
-.nav .links.open a:nth-child(3) { transition-delay: 0.15s; }
-.nav .links.open a:nth-child(4) { transition-delay: 0.2s; }
-.nav .links.open a:nth-child(5) { transition-delay: 0.25s; }
 
 
-/* --- Fix: Force hamburger button visible on mobile (keep original design) --- */
+
 @media (max-width: 768px) {
-  .nav-toggle {
-    display: block !important;   /* 強制表示 */
-    position: relative;
-    z-index: 2000;               /* 前面に表示 */
+  .nav .links a {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
   }
+  .nav .links.open a {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .nav .links.open a:nth-child(1) { transition-delay: 0.05s; }
+  .nav .links.open a:nth-child(2) { transition-delay: 0.1s; }
+  .nav .links.open a:nth-child(3) { transition-delay: 0.15s; }
+  .nav .links.open a:nth-child(4) { transition-delay: 0.2s; }
+  .nav .links.open a:nth-child(5) { transition-delay: 0.25s; }
+}
 
-  .nav-toggle span {
-    background-color: #ffffff !important; /* 白で固定 */
-    opacity: 1 !important;                /* 透明化を無効化 */
-    visibility: visible !important;       /* 隠されないようにする */
+
+/* --- Custom Enhancements (2025-09-01) --- */
+
+/* モバイルナビ改善 */
+@media (max-width: 768px) {
+  .nav .links {
+    background: linear-gradient(180deg, #1b2142, #0e1530);
+    padding: 10px 0;
+    border: 1px solid rgba(255,255,255,0.08);
   }
+  .nav .links a {
+    display: block;
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .nav .links a:last-child {
+    border-bottom: none;
+  }
+}
+
+/* アニメーション改善 */
+.nav .links.open a {
+  animation: fadeInSlide 0.4s ease forwards;
+}
+@keyframes fadeInSlide {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+/* --- Fix: Ensure hamburger button is always visible --- */
+.nav-toggle {
+  display: flex !important; /* 常に表示 */
+  position: relative;
+  z-index: 2000; /* 他の要素に隠れないように */
+}
+.nav-toggle span {
+  background-color: #ffffff !important; /* 白に固定 */
+  opacity: 1 !important;
+  visibility: visible !important;
 }
