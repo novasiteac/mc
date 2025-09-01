@@ -184,7 +184,7 @@ th{background:rgba(255,255,255,.04)}
     animation: fadeSlideIn 0.35s ease forwards;
   }
 
-  nav ul.open {
+  nav ul.show {
     display: flex;
   }
 
@@ -235,9 +235,9 @@ th{background:rgba(255,255,255,.04)}
     animation: flatMenuFade 0.25s ease forwards;
   }
 
-  nav ul.open,
-  nav #nav-links.open,
-  nav .links.open {
+  nav ul.show,
+  nav #nav-links.show,
+  nav .links.show {
     display: flex !important;
   }
 
@@ -255,6 +255,65 @@ th{background:rgba(255,255,255,.04)}
     padding: 16px 20px !important;
     color: #ffffff !important;
     font-size: 16px !important;
+    font-weight: 600 !important;
+    text-decoration: none !important;
+    transition: background 0.25s ease;
+  }
+
+  nav ul li a:hover {
+    background: rgba(255, 255, 255, 0.08) !important;
+  }
+
+  @keyframes flatMenuFade {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+}
+
+
+/* --- Flat Dark Hamburger Menu (large text) --- */
+@media (max-width: 768px) {
+  nav ul,
+  nav #nav-links,
+  nav .links {
+    position: absolute !important;
+    top: 56px !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    z-index: 1000 !important;
+
+    background: #0d1326 !important;   /* deep navy flat background */
+    padding: 0 !important;
+    margin: 0 !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+
+    display: none;
+    flex-direction: column;
+    animation: flatMenuFade 0.25s ease forwards;
+  }
+
+  nav ul.open,
+  nav #nav-links.open,
+  nav .links.open {
+    display: flex !important;
+  }
+
+  nav ul li {
+    list-style: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  nav ul li:first-child {
+    border-top: 1px solid rgba(255, 255, 255, 0.15) !important;
+  }
+
+  nav ul li a {
+    display: block;
+    padding: 18px 22px !important;
+    color: #ffffff !important;
+    font-size: 18px !important;   /* larger text */
     font-weight: 600 !important;
     text-decoration: none !important;
     transition: background 0.25s ease;
